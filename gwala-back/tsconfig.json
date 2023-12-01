@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "lib": ["es6"],    
+    "target": "es2022",
     "module": "commonjs",
+    "lib": ["es6"],    
+    "types": ["jest"],
     "rootDir": "./src",
     "outDir": "./dist",     
     "resolveJsonModule": true,                       

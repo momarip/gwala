@@ -17,12 +17,10 @@ mongoose
   })
   .then(() => {
     console.log('Connected to the Database.');
-    // Call the function to setup Apollo Server after the database connection is established
     setupApolloServer();
   })
   .catch(err => console.error(err));
 
-// Use an async function to read the schema file asynchronously
 const loadSchema = async () => {
   try {
     const schemaPath = path.join(__dirname, './graphql/schemas/userSchema.graphql');
@@ -49,13 +47,6 @@ const setupApolloServer = async () => {
 
   await apolloServer.start();
   apolloServer.applyMiddleware({ app, path: '/graphql' });
-
-  // Additional server setup and listening logic
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`GraphQL endpoint: http://localhost:${PORT}/graphql`);
-  });
 };
 
 export default app;
