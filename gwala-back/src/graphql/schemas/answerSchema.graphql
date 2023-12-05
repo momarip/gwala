@@ -1,0 +1,19 @@
+scalar Date
+
+type Answer {
+  _id: ID!
+  questionId: Question!
+  content: String!
+  userId: User!
+  createdAt: Date!
+}
+
+type Query {
+  getAllAnswers: [Answer!]!
+  getAnswerById(id: ID!): Answer!
+}
+
+type Mutation {
+  answerQuestion(questionId: ID!, content: String!, userId: ID!): Answer!
+}
+

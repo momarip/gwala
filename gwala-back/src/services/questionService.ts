@@ -10,6 +10,10 @@ class QuestionService {
     await newQuestion.save();
     return newQuestion;
   }
+
+  async getQuestionById(id: string) {
+    return Question.findById(id);
+  }
 }
 
 export default QuestionService;

@@ -27,9 +27,11 @@ const loadSchema = async () => {
     try {
         const userSchemaPath = path_1.default.join(__dirname, './graphql/schemas/userSchema.graphql');
         const questionSchemaPath = path_1.default.join(__dirname, './graphql/schemas/questionSchema.graphql');
+        const answerSchemaPath = path_1.default.join(__dirname, './graphql/schemas/answerSchema.graphql');
         const userTypeDefs = await promises_1.default.readFile(userSchemaPath, 'utf-8');
         const questionTypeDefs = await promises_1.default.readFile(questionSchemaPath, 'utf-8');
-        return [userTypeDefs, questionTypeDefs];
+        const answerTypeDefs = await promises_1.default.readFile(answerSchemaPath, 'utf-8');
+        return [userTypeDefs, questionTypeDefs, answerTypeDefs];
     }
     catch (error) {
         console.error('Error reading schema file:', error);

@@ -33,7 +33,8 @@ class UserService {
         return user;
     }
     async getUserByEmail(email) {
-        return user_1.default.findOne({ email });
+        const user = await user_1.default.findOne({ email });
+        return user;
     }
     generateAccessToken(userId) {
         const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || 'access-secret-key';

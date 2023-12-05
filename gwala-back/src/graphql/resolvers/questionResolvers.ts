@@ -6,6 +6,15 @@ const questionService = new QuestionService();
 const questionResolvers = {
   Query: {
     getAllQuestions: questionService.getAllQuestions,
+    getQuestionById: async (_: any, { id }: any) => {
+      const question = await questionService.getQuestionById(id);
+
+      if (!question) {
+        throw new Error('Question not found');
+      }
+
+      return question;
+    },
   },
   // Mutation: {
   //   postQuestion: async (_: any, { title, content, location, userId }: any, context: any) => {

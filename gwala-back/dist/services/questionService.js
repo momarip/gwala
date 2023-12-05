@@ -13,5 +13,8 @@ class QuestionService {
         await newQuestion.save();
         return newQuestion;
     }
+    async getQuestionById(id) {
+        return question_1.default.findById(id);
+    }
 }
 exports.default = QuestionService;

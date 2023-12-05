@@ -8,6 +8,8 @@ type Question {
 
 type Query {
   getAllQuestions: [Question!]!
+  getQuestionById(id: ID!): Question!
+
 }
 
 type Mutation {
