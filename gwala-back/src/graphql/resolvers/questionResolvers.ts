@@ -15,6 +15,29 @@ const questionResolvers = {
 
       return question;
     },
+
+    getQuestionsSortedByDistance: async (_: any, args: any, context: any) => {
+      try {
+        // Check authentication, extract token, and validate
+        if (!context.req || !context.req.headers || !context.req.headers.authorization) {
+          throw new Error("Access token is required to get questions by distance");
+        }
+
+        const accessToken = context.req.headers.authorization.replace('Bearer ', '');
+        const decodedToken: any = jwt.verify(
+          accessToken,
+          process.env.ACCESS_TOKEN_SECRET || 'access-secret-key'
+        );
+        const userId = decodedToken.userId;
+
+        const questions = await questionService.getQuestionsSortedByDistance(userId);
+
+        return questions;
+      } catch (error) {
+        console.error('Error in getQuestionsSortedByDistanceFromCurrentUser resolver:', error);
+        throw new Error('Failed to get questions by distance');
+      }
+    },
   },
   // Mutation: {
   //   postQuestion: async (_: any, { title, content, location, userId }: any, context: any) => {

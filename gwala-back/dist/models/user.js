@@ -19,8 +19,12 @@ const userSchema = new mongoose_1.Schema({
     resetToken: {
         type: String,
         required: false,
-    }
-    // ... other fields
+    },
+    location: {
+        type: [Number], // Array of [latitude, longitude]
+        required: false,
+        index: '2dsphere', // Add 2dsphere index for spatial queries
+    },
 });
 const User = (0, mongoose_1.model)('User', userSchema);
 exports.default = User;

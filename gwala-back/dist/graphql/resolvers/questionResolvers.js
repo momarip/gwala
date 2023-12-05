@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const questionService_1 = __importDefault(require("../../services/questionService"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const questionService = new questionService_1.default();
 const questionResolvers = {
     Query: {
@@ -14,6 +15,23 @@ const questionResolvers = {
                 throw new Error('Question not found');
             }
             return question;
+        },
+        getQuestionsSortedByDistance: async (_, args, context) => {
+            try {
+                // Check authentication, extract token, and validate
+                if (!context.req || !context.req.headers || !context.req.headers.authorization) {
+                    throw new Error("Access token is required to get questions by distance");
+                }
+                const accessToken = context.req.headers.authorization.replace('Bearer ', '');
+                const decodedToken = jsonwebtoken_1.default.verify(accessToken, process.env.ACCESS_TOKEN_SECRET || 'access-secret-key');
+                const userId = decodedToken.userId;
+                const questions = await questionService.getQuestionsSortedByDistance(userId);
+                return questions;
+            }
+            catch (error) {
+                console.error('Error in getQuestionsSortedByDistanceFromCurrentUser resolver:', error);
+                throw new Error('Failed to get questions by distance');
+            }
         },
     },
     // Mutation: {

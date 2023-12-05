@@ -15,13 +15,14 @@ const userResolvers = {
     getUserById: userService.getUserById,
   },
   Mutation: {
-    signUp: async (_: any, { name, email, password }: any) => {
+    signUp: async (_: any, { name, email, password, location }: any) => {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const newUser = await userService.createUser({
         name,
         email,
         password: hashedPassword,
+        location
       });
 
       const accessToken = userService.generateAccessToken(newUser._id);

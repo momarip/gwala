@@ -12,7 +12,7 @@ class UserService {
     return User.findById(id);
   }
 
-  async createUser(userData: { name: string; email: string; password: string }) {
+  async createUser(userData: { name: string; email: string; password: string, location: [Number] }) {
     const newUser = new User(userData);
     await newUser.save();
     return newUser;
@@ -51,13 +51,14 @@ class UserService {
     return jwt.sign({ userId }, refreshTokenSecret, options);
   }
 
-  async signUp(name: string, email: string, password: string) {
+  async signUp(name: string, email: string, password: string, location: [Number]) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await this.createUser({
       name,
       email,
       password: hashedPassword,
+      location
     });
 
     const accessToken = this.generateAccessToken(newUser._id);

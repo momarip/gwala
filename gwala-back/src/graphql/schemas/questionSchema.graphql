@@ -2,16 +2,16 @@ type Question {
   _id: ID!
   title: String!
   content: String!
-  location: String!
+  location: [Float]!
   userId: User!
 }
 
 type Query {
   getAllQuestions: [Question!]!
   getQuestionById(id: ID!): Question!
-
+  getQuestionsSortedByDistance(distance: Float): [Question!]!
 }
 
 type Mutation {
-  postQuestion(title: String!, content: String!, location: String!, userId: String!): Question!
+  postQuestion(title: String!, content: String!, location: [Float]!, userId: String!): Question!
 }

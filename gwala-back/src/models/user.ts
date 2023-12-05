@@ -5,6 +5,7 @@ interface IUser extends Document {
   email: string;
   password: string;
   resetToken: any;
+  location: [number, number];
 }
 
 const userSchema = new Schema<IUser>({
@@ -25,8 +26,12 @@ const userSchema = new Schema<IUser>({
   resetToken: {
     type: String,
     required: false,
-  }
-  // ... other fields
+  },
+  location: {
+    type: [Number], // Array of [latitude, longitude]
+    required: true,
+    index: '2dsphere', // Add 2dsphere index for spatial queries
+  },
 });
 
 const User = model<IUser>('User', userSchema);

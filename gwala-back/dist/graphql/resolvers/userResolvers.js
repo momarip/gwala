@@ -17,12 +17,13 @@ const userResolvers = {
         getUserById: userService.getUserById,
     },
     Mutation: {
-        signUp: async (_, { name, email, password }) => {
+        signUp: async (_, { name, email, password, location }) => {
             const hashedPassword = await bcrypt_1.default.hash(password, 10);
             const newUser = await userService.createUser({
                 name,
                 email,
                 password: hashedPassword,
+                location
             });
             const accessToken = userService.generateAccessToken(newUser._id);
             const refreshToken = userService.generateRefreshToken(newUser._id);
@@ -89,51 +90,40 @@ const userResolvers = {
                 throw new Error("Failed to post a question");
             }
         },
-        // answerQuestion: async (
-        //   _: any,
-        //   { questionId, content }: any,
-        //   context: any
-        // ) => {
-        //   try {
-        //     // Check authentication, extract token, and validate
-        //     if (
-        //       !context.req ||
-        //       !context.req.headers ||
-        //       !context.req.headers.authorization
-        //     ) {
-        //       throw new Error("Access token is required to answer a question");
-        //     }
-        //     const accessToken = context.req.headers.authorization.replace(
-        //       "Bearer ",
-        //       ""
-        //     );
-        //     const decodedToken: any = jwt.verify(
-        //       accessToken,
-        //       process.env.ACCESS_TOKEN_SECRET || "access-secret-key"
-        //     );
-        //     const authenticatedUserId = decodedToken.userId;
-        //     // Fetch the question to ensure it exists and get additional details
-        //     const question: any = await questionService.getQuestionById(questionId);
-        //     if (!question) {
-        //       throw new Error("Question not found");
-        //     }
-        //     // Ensure the authenticated user is not the same as the user who posted the question
-        //     if (question.user.toString() === authenticatedUserId) {
-        //       throw new Error("Cannot answer your own question");
-        //     }
-        //     // Create a new answer associated with the question
-        //     const newAnswer = await answerService.createAnswer({
-        //       question: questionId,
-        //       content,
-        //       user: authenticatedUserId,
-        //     });
-        //     return newAnswer;
-        //   } catch (error) {
-        //     // Handle errors
-        //     console.error("Error in answerQuestion resolver:", error);
-        //     throw new Error("Failed to answer the question");
-        //   }
-        // },
+        answerQuestion: async (_, { questionId, content }, context) => {
+            try {
+                // Check authentication, extract token, and validate
+                if (!context.req ||
+                    !context.req.headers ||
+                    !context.req.headers.authorization) {
+                    throw new Error("Access token is required to answer a question");
+                }
+                const accessToken = context.req.headers.authorization.replace("Bearer ", "");
+                const decodedToken = jsonwebtoken_1.default.verify(accessToken, process.env.ACCESS_TOKEN_SECRET || "access-secret-key");
+                const authenticatedUserId = decodedToken.userId;
+                // Fetch the question to ensure it exists and get additional details
+                const question = await questionService.getQuestionById(questionId);
+                if (!question) {
+                    throw new Error("Question not found");
+                }
+                // Ensure the authenticated user is not the same as the user who posted the question
+                if (question.user.toString() === authenticatedUserId) {
+                    throw new Error("Cannot answer your own question");
+                }
+                // Create a new answer associated with the question
+                const newAnswer = await answerService.createAnswer({
+                    question: questionId,
+                    content,
+                    user: authenticatedUserId,
+                });
+                return newAnswer;
+            }
+            catch (error) {
+                // Handle errors
+                console.error("Error in answerQuestion resolver:", error);
+                throw new Error("Failed to answer the question");
+            }
+        },
     },
 };
 exports.default = userResolvers;

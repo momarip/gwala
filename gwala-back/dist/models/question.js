@@ -34,8 +34,9 @@ const questionSchema = new mongoose_1.default.Schema({
         required: true,
     },
     location: {
-        type: String,
+        type: [Number],
         required: true,
+        index: '2dsphere'
     },
     user: {
         type: mongoose_1.default.Schema.Types.ObjectId,

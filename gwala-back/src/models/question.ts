@@ -10,8 +10,9 @@ const questionSchema = new mongoose.Schema({
       required: true,
     },
     location: {
-      type: String,
+      type: [Number],
       required: true,
+      index: '2dsphere'
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

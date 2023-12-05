@@ -4,7 +4,7 @@ type User {
   email: String!
   password: String!
   resetToken: String
-  # ... other fields
+  location: [Float]!
 }
 
 type AuthPayload {
@@ -24,7 +24,7 @@ type PasswordResetToken {
 }
 
 type Mutation {
-  signUp(name: String!, email: String!, password: String!): AuthPayload!
+  signUp(name: String!, email: String!, password: String!, location: [Float]!): AuthPayload!
   signIn(email: String!, password: String!): AuthPayload!
   requestPasswordReset(email: String!): Boolean
   resetPassword(token: String!, newPassword: String!): AuthPayload!

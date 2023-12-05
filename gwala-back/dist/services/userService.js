@@ -46,12 +46,13 @@ class UserService {
         const options = { expiresIn: '7d' };
         return jsonwebtoken_1.default.sign({ userId }, refreshTokenSecret, options);
     }
-    async signUp(name, email, password) {
+    async signUp(name, email, password, location) {
         const hashedPassword = await bcrypt_1.default.hash(password, 10);
         const newUser = await this.createUser({
             name,
             email,
             password: hashedPassword,
+            location
         });
         const accessToken = this.generateAccessToken(newUser._id);
         const refreshToken = this.generateRefreshToken(newUser._id);
