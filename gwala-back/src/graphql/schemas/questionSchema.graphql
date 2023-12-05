@@ -1,0 +1,15 @@
+type Question {
+  _id: ID!
+  title: String!
+  content: String!
+  location: String!
+  userId: User!
+}
+
+type Query {
+  getAllQuestions: [Question!]!
+}
+
+type Mutation {
+  postQuestion(title: String!, content: String!, location: String!, userId: String!): Question!
+}

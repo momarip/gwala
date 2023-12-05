@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const userService_1 = __importDefault(require("../../services/userService"));
+const questionService_1 = __importDefault(require("../../services/questionService"));
 const userService = new userService_1.default();
+const questionService = new questionService_1.default();
 const userResolvers = {
     Query: {
         getAllUsers: userService.getAllUsers,
@@ -14,33 +16,48 @@ const userResolvers = {
     },
     Mutation: {
         signUp: async (_, { name, email, password }) => {
-            // Hash the password
             const hashedPassword = await bcrypt_1.default.hash(password, 10);
-            // Create a new user
             const newUser = await userService.createUser({
                 name,
                 email,
                 password: hashedPassword,
             });
-            // Create a JWT token
-            const token = jsonwebtoken_1.default.sign({ userId: newUser._id }, process.env.JWT_SECRET || 'secret-key');
-            return { token, user: newUser };
+            const accessToken = userService.generateAccessToken(newUser._id);
+            const refreshToken = userService.generateRefreshToken(newUser._id);
+            return { accessToken, refreshToken, user: newUser };
         },
         signIn: async (_, { email, password }) => {
-            // Find the user by email
             const user = await userService.getUserByEmail(email);
             if (!user) {
                 throw new Error('User not found');
             }
-            // Check if the provided password is correct
             const isPasswordValid = await bcrypt_1.default.compare(password, user.password);
             if (!isPasswordValid) {
                 throw new Error('Invalid password');
             }
-            // Create a JWT token
-            const token = jsonwebtoken_1.default.sign({ userId: user._id }, process.env.JWT_SECRET || 'secret-key');
-            return { token, user };
+            const accessToken = userService.generateAccessToken(user._id);
+            const refreshToken = userService.generateRefreshToken(user._id);
+            console.log('Sign in successful. Returning tokens and user.');
+            return { accessToken, refreshToken, user };
         },
-    },
+        requestPasswordReset: async (_, { email }) => {
+            const user = await userService.getUserByEmail(email);
+            if (!user) {
+                throw new Error('User not found');
+            }
+            const resetToken = await userService.createResetToken(user._id);
+            return true;
+        },
+        resetPassword: async (_, { token, newPassword }) => {
+            const userId = await userService.verifyResetToken(token);
+            if (!userId) {
+                throw new Error('Invalid or expired reset token');
+            }
+            const hashedPassword = await bcrypt_1.default.hash(newPassword, 10);
+            await userService.updateUserPassword(userId, hashedPassword);
+            const newToken = jsonwebtoken_1.default.sign({ userId }, process.env.JWT_SECRET || 'secret-key');
+            return { token: newToken, user: { _id: userId, name: '', email: '' } };
+        },
+    }
 };
 exports.default = userResolvers;

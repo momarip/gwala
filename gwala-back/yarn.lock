@@ -86,10 +86,23 @@
     "@apollo/utils.logger" "^1.0.0"
     lru-cache "7.10.1 - 7.13.1"
 
+"@apollo/utils.keyvaluecache@^3.0.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@apollo/utils.keyvaluecache/-/utils.keyvaluecache-3.1.0.tgz#acda4c4b1906233dcca3239d77c5d75b3058a81f"
+  integrity sha512-MM/DKIqpQQbuNG1gNPAlGc45THdWkroTmN8o/J09merFwf/LlZ7+lAfcHFDXIYIknwKmUjJrOMS3OxYbjrz2hA==
+  dependencies:
+    "@apollo/utils.logger" "^3.0.0"
+    lru-cache "^10.0.0"
+
 "@apollo/utils.logger@^1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@apollo/utils.logger/-/utils.logger-1.0.1.tgz#aea0d1bb7ceb237f506c6bbf38f10a555b99a695"
   integrity sha512-XdlzoY7fYNK4OIcvMD2G94RoFZbzTQaNP0jozmqqMudmaGo2I/2Jx71xlDJ801mWA/mbYRihyaw6KJii7k5RVA==
+
+"@apollo/utils.logger@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@apollo/utils.logger/-/utils.logger-3.0.0.tgz#5b67de1e476bdfa8be70bfaa05c7e65a6a427960"
+  integrity sha512-M8V8JOTH0F2qEi+ktPfw4RL7MvUycDfKp7aEap2eWXfL5SqWHN6jTLbj5f5fj1cceHpyaUSOZlvlaaryaxZAmg==
 
 "@apollo/utils.printwithreducedwhitespace@^1.1.0":
   version "1.1.0"
@@ -1183,6 +1196,11 @@
   dependencies:
     "@types/superagent" "*"
 
+"@types/uuid@^9.0.7":
+  version "9.0.7"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-9.0.7.tgz#b14cebc75455eeeb160d5fe23c2fcc0c64f724d8"
+  integrity sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==
+
 "@types/webidl-conversions@*":
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/@types/webidl-conversions/-/webidl-conversions-7.0.3.tgz#1306dbfa53768bcbcfc95a1c8cde367975581859"
@@ -1308,6 +1326,15 @@ apollo-cache-control@^0.15.0:
   dependencies:
     apollo-server-env "^3.2.0"
     apollo-server-plugin-base "^0.14.0"
+
+apollo-datasource-mongodb@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/apollo-datasource-mongodb/-/apollo-datasource-mongodb-0.6.0.tgz#643e3311cff1861a11cc967eff7259d0a84342e3"
+  integrity sha512-WdQORVKBleXLrmLQINLYmUfFtsqgwlLmLedr8Ebtxy15aT4iMC4er6tJEStyOTDaahQp6JpL7rT7fFII1642Vg==
+  dependencies:
+    "@apollo/utils.keyvaluecache" "^3.0.0"
+    bson "^5.4.0"
+    dataloader "^1.4.0"
 
 apollo-datasource@^0.10.0:
   version "0.10.0"
@@ -2226,6 +2253,11 @@ bser@2.1.1:
   dependencies:
     node-int64 "^0.4.0"
 
+bson@^5.4.0:
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-5.5.1.tgz#f5849d405711a7f23acdda9a442375df858e6833"
+  integrity sha512-ix0EwukN2EpC0SRWIj/7B5+A6uQMQy6KMREI9qQqvgpkV2frH63T0UDVd1SYedL6dNCmDBYB3QtXi4ISk9YT+g==
+
 bson@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/bson/-/bson-6.2.0.tgz#4b6acafc266ba18eeee111373c2699304a9ba0a3"
@@ -2501,6 +2533,11 @@ cssfilter@0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/cssfilter/-/cssfilter-0.0.10.tgz#c6d2672632a2e5c83e013e6864a42ce8defd20ae"
   integrity sha512-FAaLDaplstoRsDR8XGYH51znUN0UY7nMc6Z9/fvE8EXGwvJE9hu7W2vHwx1+bd6gCYnln9nLbzxFTrcO9YQDZw==
+
+dataloader@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-1.4.0.tgz#bca11d867f5d3f1b9ed9f737bd15970c65dff5c8"
+  integrity sha512-68s5jYdlvasItOJnCuI2Q9s4q98g0pCyL3HrcKJu8KNugUl8ahgmZYg38ysLTgQjjXX3H8CJLkAvWrclWfcalw==
 
 debug@2.6.9, debug@^2.6.8:
   version "2.6.9"
@@ -4013,6 +4050,11 @@ loose-envify@^1.0.0:
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.13.1.tgz#267a81fbd0881327c46a81c5922606a2cfe336c4"
   integrity sha512-CHqbAq7NFlW3RSnoWXLJBxCWaZVBrfa9UEHId2M3AW8iEBurbqduNexEUCGc3SHc6iCYXNJCDi903LajSVAEPQ==
 
+lru-cache@^10.0.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.1.0.tgz#2098d41c2dc56500e6c88584aa656c84de7d0484"
+  integrity sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==
+
 lru-cache@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
@@ -5246,7 +5288,7 @@ uuid@^8.0.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
-uuid@^9.0.0:
+uuid@^9.0.0, uuid@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
   integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
